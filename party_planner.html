@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart - Party Budget Planner</title>
+    <!-- பூட்ஸ்டார்ப் மற்றும் ஃபான்ட் டிசைன் லைவ் லிங்க்குகள் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <style>
+        body { background-color: #ebf2f7; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        .navbar { background-color: #0b2240; padding: 12px 20px; display: flex; justify-content: space-between; }
+        .navbar a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .planner-header { background-color: #1a4f8a; color: white; padding: 20px; text-align: center; }
+        .main-card { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-top: 20px; border: 1px solid #e2e8f0; }
+        .box-section { background: white; border: 1px solid #edf2f7; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .box-title { font-size: 0.95rem; font-weight: bold; color: #1a4f8a; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .btn-generate { background-color: #1a4f8a; color: white; padding: 12px 35px; font-weight: bold; border-radius: 6px; border: none; font-size: 0.9rem; display: block; margin: 25px auto; cursor: pointer; width: 100%; }
+        .btn-generate:hover { background-color: #123963; }
+        
+        .output-card { background: white; border-radius: 8px; border: 1px solid #e2e8f0; padding: 25px; margin-top: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .output-row-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background-color: #f8fafc; border: 1px solid #e2e8f0; font-weight: bold; font-size: 0.95rem; color: #2d3748; border-radius: 6px; margin-top: 15px; }
+        .output-item-box { padding: 15px; border: 1px solid #edf2f7; border-top: none; background-color: white; font-size: 0.88rem; display: flex; justify-content: space-between; align-items: center; }
+        .item-details { max-width: 70%; }
+        .item-links-box { display: flex; gap: 6px; flex-wrap: wrap; max-width: 220px; }
+        .shopping-btn { padding: 4px 8px; font-size: 0.72rem; border-radius: 4px; text-decoration: none; font-weight: bold; background-color: #f0f4f8; color: #1a4f8a; border: 1px solid #cbd5e0; display: inline-block; }
+        .shopping-btn:hover { background-color: #e2e8f0; }
+        .total-summary-box { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-top: 25px; font-size: 0.88rem; }
+        .summary-row { display: flex; justify-content: space-between; padding: 4px 0; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar shadow-sm">
+    <a href="/dashboard">PocketSmart</a>
+    <div class="d-flex gap-3">
+        <a href="/home" style="color: rgba(255,255,255,0.6);">Home Planner</a>
+        <a href="/party">Party Planner</a>
+    </div>
+</nav>
+
+<div class="planner-header">
+    <h4 class="fw-bold m-0" style="font-size:1.3rem;">Party Budget Planner</h4>
+    <p class="m-0 mt-1 text-white-50" style="font-size:0.8rem;">Plan your perfect event with AI-powered budget recommendations</p>
+</div>
+
+<div class="container" style="max-width: 650px;">
+    <div class="main-card shadow-sm">
+        
+        <!-- Box 1: Basic Information -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-user-gear me-1"></i> Basic Information</div>
+            <div class="mb-3">
+                <label class="form-label text-muted small mb-1">Total Budget (₹)</label>
+                <input type="number" id="partyBudget" class="form-control" value="5000">
+            </div>
+            <div>
+                <label class="form-label text-muted small mb-1">Number of Guests</label>
+                <input type="number" id="guestsCount" class="form-control" value="2">
+            </div>
+        </div>
+
+        <!-- Box 2: Event Details -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-house-laptop me-1"></i> Event Details</div>
+            <div class="mb-3">
+                <label class="form-label text-muted small mb-1">Party Type</label>
+                <input type="text" class="form-control" value="Wedding">
+            </div>
+            <div>
+                <label class="form-label text-muted small mb-1">Venue Type</label>
+                <input type="text" class="form-control" value="Home">
+            </div>
+        </div>
+
+        <!-- Box 3: Party Needs -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-utensils me-1"></i> Party Needs</div>
+            <div class="d-flex gap-3 flex-wrap" style="font-size:0.85rem;">
+                <div class="form-check border p-2 px-3 rounded d-flex align-items-center gap-2"><input class="form-check-input ms-0" type="checkbox" checked><label class="form-check-label">Catering</label></div>
+                <div class="form-check border p-2 px-3 rounded d-flex align-items-center gap-2"><input class="form-check-input ms-0" type="checkbox" checked><label class="form-check-label">Decoration</label></div>
+                <div class="form-check border p-2 px-3 rounded d-flex align-items-center gap-2"><input class="form-check-input ms-0" type="checkbox" checked><label class="form-check-label">Entertainment</label></div>
+            </div>
+        </div>
+
+        <!-- Box 4: Additional Requirements -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-file-pen me-1"></i> Additional Requirements</div>
+            <textarea class="form-control" rows="2" placeholder="Special requests, themes, dietary restrictions, etc."></textarea>
+        </div>
+
+        <button onclick="generatePartyOfficialLayout()" class="btn-generate text-white shadow-sm"><i class="fa-solid fa-calculator me-1"></i> Generate Budget Plan</button>
+
+        <div id="partyOutput" class="d-none"></div>
+    </div>
+</div>
+
+<script>
+function generatePartyOfficialLayout() {
+    const budget = parseFloat(document.getElementById('partyBudget').value) || 5000;
+    const outputDiv = document.getElementById('partyOutput');
+    outputDiv.classList.remove('d-none');
+    outputDiv.innerHTML = "<p class='text-center fw-bold text-primary py-3'>PocketSmart AI is organizing food and decor arrays...</p>";
+    
+    setTimeout(() => {
+        let html = `
+            <div class="output-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold m-0 text-dark" style="font-size:1.1rem;">Your Party Budget Plan</h5>
+                    <button class="btn btn-primary btn-sm px-3" style="font-size:0.75rem; border-radius:4px;"><i class="fa-solid fa-print me-1"></i> Print/Save</button>
+                </div>
+                <div class="fw-bold text-primary mb-4" style="font-size:1.05rem;">Budget: ₹`+budget.toFixed(2)+`</div>
+                
+                <div class="output-row-header"><span>📍 Venue</span><span>₹0.00</span></div>
+                <div class="output-item-box">
+                    <div class="item-details"><strong>Home</strong><br><span class="text-muted small" style="font-size:0.78rem;">Utilizing the home as the venue.</span><br><span class="text-secondary" style="font-size:0.75rem;">Shop on:</span></div>
+                    <div class="item-links-box"><a href="https://google.com" target="_blank" class="shopping-btn">Google</a><a href="https://amazon.in" target="_blank" class="shopping-btn">Blinkit</a><a href="https://makemytrip.com" target="_blank" class="shopping-btn">MakeMyTrip</a><a href="https://oyorooms.com" target="_blank" class="shopping-btn">OyoRooms</a></div>
+                </div>
+
+                <div class="output-row-header"><span>🍴 Catering</span><span>₹2000.00</span></div>
+                <div class="output-item-box">
+                    <div class="item-details"><strong>Home-cooked meal</strong><br><span class="text-muted small" style="font-size:0.78rem;">Simple, home-cooked meal for 2 people.</span><br><span class="text-secondary" style="font-size:0.75rem;">Shop on:</span></div>
+                    <div class="item-links-box"><a href="https://swiggy.com" target="_blank" class="shopping-btn">Swiggy</a><a href="https://zomato.com" target="_blank" class="shopping-btn">Zomato</a></div>
+                </div>
+
+                <div class="output-row-header"><span>🎵 Entertainment</span><span>₹2000.00</span></div>
+                <div class="output-item-box" style="border-bottom:none;">
+                    <div class="item-details"><strong>Music playlist</strong><br><span class="text-muted small" style="font-size:0.78rem;">Celebratory playlist on Spotify or YouTube Music.</span><br><span class="text-secondary" style="font-size:0.75rem;">Shop on:</span></div>
+                    <div class="item-links-box"><a href="https://spotify.com" target="_blank" class="shopping-btn">Spotify</a><a href="https://youtube.com" target="_blank" class="shopping-btn">YouTube</a></div>
+                </div>
+
+                <div class="total-summary-box">
+                    <div class="summary-row"><span><strong>Total Budget</strong></span><span><strong>₹`+budget.toFixed(2)+`</strong></span></div>
+                    <div class="summary-row text-muted"><span>Allocated</span><span>₹`+budget.toFixed(2)+`</span></div>
+                    <div class="summary-row text-success"><span>Remaining</span><span>₹0.00</span></div>
+                </div>
+            </div>
+        `;
+        outputDiv.innerHTML = html;
+    }, 400);
+}
+</script>
+</body>
+</html>

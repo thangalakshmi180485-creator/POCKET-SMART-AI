@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart - Jewelry Planner</title>
+    <!-- பூட்ஸ்டார்ப் மற்றும் ஃபான்ட் டிசைன் லைவ் லிங்க்குகள் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <style>
+        body { background-color: #ebf2f7; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        .navbar { background-color: #0b2240; padding: 12px 20px; display: flex; justify-content: space-between; }
+        .navbar a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .planner-header { background-color: #1a4f8a; color: white; padding: 20px; text-align: center; }
+        .main-card { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-top: 20px; border: 1px solid #e2e8f0; }
+        .box-section { background: white; border: 1px solid #edf2f7; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .box-title { font-size: 0.95rem; font-weight: bold; color: #1a4f8a; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .btn-generate { background-color: #1a4f8a; color: white; padding: 12px 35px; font-weight: bold; border-radius: 6px; border: none; font-size: 0.9rem; display: block; margin: 25px auto; cursor: pointer; width: 100%; }
+        .btn-generate:hover { background-color: #123963; }
+        
+        /* அவுட்புட் கார்டுகளுக்கான துல்லியமான போர்ட்டல் லேஅவுட் ஸ்டைல்கள் */
+        .output-card { background: white; border-radius: 8px; border: 1px solid #e2e8f0; padding: 25px; margin-top: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .section-header-blue { display: flex; align-items: center; gap: 8px; padding: 12px 15px; background-color: #1a4f8a; color: white; font-weight: bold; font-size: 0.95rem; border-radius: 6px; margin-top: 20px; }
+        .info-row-box { padding: 15px; border: 1px solid #e2e8f0; border-top: none; background-color: white; font-size: 0.88rem; display: flex; justify-content: space-between; align-items: center; }
+        .sub-item-header { font-size: 0.92rem; font-weight: bold; color: #2d3748; margin-top: 15px; display: flex; align-items: center; gap: 8px; }
+        .price-badge { background-color: #2b6cb0; color: white; font-weight: bold; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; }
+        .links-flex { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .shop-link-btn { padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; text-decoration: none; background-color: #f0f4f8; color: #2b6cb0; border: 1px solid #cbd5e0; font-weight: 500; }
+        .preview-img { max-width: 150px; border-radius: 6px; border: 1px solid #cbd5e0; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar shadow-sm">
+    <a href="/dashboard">PocketSmart</a>
+    <div class="d-flex gap-3">
+        <a href="/home" style="color: rgba(255,255,255,0.6);">Home Planner</a>
+        <a href="/party" style="color: rgba(255,255,255,0.6);">Party Planner</a>
+        <a href="/jewelry">Jewelry Planner</a>
+    </div>
+</nav>
+
+<div class="planner-header">
+    <h4 class="fw-bold m-0" style="font-size:1.3rem;">Jewelry Budget Planner</h4>
+    <p class="m-0 mt-1 text-white-50" style="font-size:0.8rem;">Get AI-powered jewelry recommendations within your budget for any occasion</p>
+</div>
+
+<div class="container" style="max-width: 650px;">
+    <div class="main-card shadow-sm">
+        
+        <!-- Box 1: Budget Details -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-wallet me-1"></i> Budget Details</div>
+            <label class="form-label text-muted small mb-1">Total Budget ($)</label>
+            <input type="number" id="jewelryBudget" class="form-control" value="5000">
+        </div>
+
+        <!-- Box 2: Occasion & Preferences -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-cake-candles me-1"></i> Occasion & Preferences</div>
+            <div class="mb-3">
+                <label class="form-label text-muted small mb-1">Occasion</label>
+                <input type="text" class="form-control" value="Birthday">
+            </div>
+            <div>
+                <label class="form-label text-muted small mb-1">Style Preferences</label>
+                <textarea class="form-control" id="stylePreferences" rows="2" placeholder="Describe your style preferences, materials, colors, etc."></textarea>
+            </div>
+        </div>
+
+        <!-- Box 3: Upload Outfit Image -->
+        <div class="box-section">
+            <div class="box-title"><i class="fa-solid fa-image me-1"></i> Upload Outfit Image</div>
+            <input type="file" class="form-control mb-2" onchange="previewOutfit(event)">
+            <img id="outfitPreview" class="preview-img" src="https://unsplash.com" alt="Outfit Preview">
+            <button class="btn btn-light btn-sm text-danger border mt-2" style="font-size:0.75rem;"><i class="fa-solid fa-trash me-1"></i> Remove Image</button>
+        </div>
+
+        <button onclick="generateJewelryOfficialLayout()" class="btn-generate text-white shadow-sm"><i class="fa-solid fa-gem me-1"></i> Get Recommendations</button>
+
+        <div id="jewelryOutput" class="d-none"></div>
+    </div>
+</div>
+
+<script>
+function previewOutfit(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        const output = document.getElementById('outfitPreview');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files);
+}
+
+function generateJewelryOfficialLayout() {
+    const budget = parseFloat(document.getElementById('jewelryBudget').value) || 5000;
+    const outputDiv = document.getElementById('jewelryOutput');
+    outputDiv.classList.remove('d-none');
+    outputDiv.innerHTML = "<p class='text-center fw-bold text-primary py-3'>PocketSmart AI is mapping outfit design vectors...</p>";
+    
+    setTimeout(function() {
+        // ஜாவாஸ்கிரிப்ட் ஸ்ட்ரிங் முரண்பாடுகளைத் தவிர்க்க சிங்கிள் ஸ்ட்ரிங் அலைன்மென்ட் முறை!
+        let html = '<div class="output-card">';
+        html += '<h5 class="fw-bold mb-3 text-dark text-center" style="font-size:1.1rem;">Your Personalized Jewelry Recommendations</h5>';
+        html += '<div class="section-header-blue"><i class="fa-solid fa-wallet"></i> Budget Summary</div>';
+        html += '<div class="info-row-box fw-bold text-secondary"><span>Total Budget: $' + budget.toFixed(2) + '</span><span>Remaining Budget: <span class="text-success">$800.00</span></span></div>';
+        html += '<div class="section-header-blue"><i class="fa-solid fa-shirt"></i> Outfit Analysis</div>';
+        html += '<div class="info-row-box text-muted" style="font-size:0.82rem;"><span>Colors: Blue, white</span><span>Style: casual</span><span>Formality: informal</span></div>';
+        html += '<div class="section-header-blue"><i class="fa-solid fa-gem"></i> Jewelry Recommendations</div>';
+        
+        // Bracelet
+        html += '<div class="sub-item-header"><span>bracelet</span><span class="price-badge">$500.00</span></div>';
+        html += '<div class="p-3 border rounded bg-light mt-1" style="font-size:0.84rem;"><p class="text-muted m-0">A simple, braided leather bracelet with metal accents. This complements the casual style of the outfit without being flashy.</p><div class="links-flex"><a href="https://amazon.in" target="_blank" class="shop-link-btn">Amazon</a><a href="https://flipkart.com" target="_blank" class="shop-link-btn">Flipkart</a><a href="#" class="shop-link-btn">Bluestone</a><a href="#" class="shop-link-btn">CaratLane</a></div></div>';
+        
+        // Ring
+        html += '<div class="sub-item-header"><span>ring</span><span class="price-badge">$700.00</span></div>';
+        html += '<div class="p-3 border rounded bg-light mt-1" style="font-size:0.84rem;"><p class="text-muted m-0">A silver or dark grey metal ring with a minimalist design. Avoid anything too large to maintain the casual feel.</p><div class="links-flex"><a href="https://amazon.in" target="_blank" class="shop-link-btn">Amazon</a><a href="https://flipkart.com" target="_blank" class="shop-link-btn">Flipkart</a><a href="#" class="shop-link-btn">CaratLane</a></div></div>';
+        
+        html += '</div>';
+        outputDiv.innerHTML = html;
+    }, 400);
+}
+</script>
+</body>
+</html>

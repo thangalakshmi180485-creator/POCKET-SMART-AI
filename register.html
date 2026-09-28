@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart - Create Account</title>
+    <!-- பூட்ஸ்டார்ப் லைவ் லிங்க் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #ebf2f7 !important; 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            height: 100vh !important; 
+            margin: 0 !important;
+            font-family: 'Segoe UI', sans-serif !important;
+        }
+        .auth-card { 
+            background: white !important; 
+            border-radius: 12px !important; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1) !important; 
+            padding: 35px !important; 
+            width: 100% !important; 
+            max-width: 400px !important; 
+            box-sizing: border-box !important;
+        }
+        .form-group-custom { margin-bottom: 20px !important; }
+        .form-label-custom { display: block !important; font-weight: 600 !important; color: #4a5568 !important; margin-bottom: 8px !important; }
+        .form-control-custom { width: 100% !important; padding: 12px !important; border: 1px solid #cbd5e0 !important; border-radius: 6px !important; }
+        .btn-auth-custom { 
+            background-color: #1a4f8a !important; 
+            color: white !important; 
+            width: 100% !important; 
+            padding: 12px !important; 
+            font-weight: bold !important; 
+            border-radius: 6px !important; 
+            border: none !important;
+            cursor: pointer !important;
+            margin-top: 10px !important;
+        }
+        .btn-auth-custom:hover { background-color: #123963 !important; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <h3 style="text-align: center; font-weight: bold; margin-bottom: 25px; color: #1a4f8a; font-size: 1.6rem; margin-top: 0;">Create Account</h3>
+    
+    <!-- 📝 நேரடியாக பேக்-எண்ட் எண்ட்பாயிண்ட்டுடன் இணைக்கப்பட்ட புதிய படிவம் -->
+    <form action="/register-save" method="post">
+        
+        <div class="form-group-custom">
+            <label class="form-label-custom">Username</label>
+            <input type="text" name="username" class="form-control-custom" placeholder="Choose username" required>
+        </div>
+        
+        <div class="form-group-custom">
+            <label class="form-label-custom">Email Address</label>
+            <input type="email" name="email" class="form-control-custom" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group-custom">
+            <label class="form-label-custom">Password</label>
+            <input type="password" name="password" class="form-control-custom" placeholder="Create secure password" required>
+        </div>
+        
+        <button type="submit" class="btn-auth-custom w-100">Register</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 20px; margin-bottom: 0; color: #718096; font-size: 0.9rem;">
+        Already have an account? <a href="/login" style="text-decoration: none; font-weight: bold; color: #1a4f8a;">Sign In</a>
+    </p>
+</div>
+
+</body>
+</html>

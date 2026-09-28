@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PocketSmart AI - Project Report</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; color: #2d3748; line-height: 1.6; margin: 40px; }
+        .header-table { width: 100%; border-collapse: collapse; border: 3px double #1a4f8a; margin-bottom: 40px; background-color: #f7fafc; }
+        .header-table td { padding: 20px; text-align: center; }
+        .main-title { font-size: 24px; font-weight: bold; color: #1a4f8a; text-transform: uppercase; margin: 0; }
+        .subtitle { font-size: 14px; color: #4a5568; margin-top: 10px; font-weight: bold; }
+        .phase-title { font-size: 16px; font-weight: bold; color: white; background-color: #1a4f8a; padding: 10px 15px; margin-top: 30px; border-radius: 4px; text-transform: uppercase; }
+        .content-box { border: 1px solid #e2e8f0; border-top: none; padding: 20px; background-color: white; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+        ul { padding-left: 20px; margin: 0; }
+        li { margin-bottom: 10px; font-size: 14px; }
+        strong { color: #2c5282; }
+    </style>
+</head>
+<body>
+
+<table class="header-table">
+    <tr>
+        <td>
+            <div class="main-title">PocketSmart: AI-Powered Smart Budget Planner</div>
+            <div class="subtitle">OFFICIAL PHASE-WISE SOFTWARE DEVELOPMENT REPORT</div>
+            <div style="font-size: 12px; color: #718096; margin-top: 15px;">FRAMEWORK: FastAPI (Python) & Bootstrap 5 Framework Engine</div>
+        </td>
+    </tr>
+</table>
+
+<div class="phase-title">Phase 1: Brainstorming & Ideation Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Core Problem Statement:</strong> Budgeting for lifestyle events like home interior modifications, wedding events, and jewelry procurement is usually scattered across fragmented offline templates or manual web searches, causing heavy budget overruns and operational human calculation errors.</li>
+        <li><strong>The AI Innovation:</strong> PocketSmart AI acts as an autonomous digital financial coordinator that captures structural limits (budgets, counts) and automatically splits them into optimized, micro-allocated categories.</li>
+        <li><strong>Ecosystem Integration:</strong> Embedded direct retail deep-links (Amazon, Flipkart, Swiggy, Zomato, CaratLane) within the output grid views to eliminate manual tracking.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 2: Requirement Analysis Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Functional Requirements:</strong> Secure parsing forms for financial boundary enforcement, an interactive options selector board, and cross-origin query engines capable of dynamic parameters passing.</li>
+        <li><strong>Non-Functional Requirements:</strong> Asynchronous operations under 400ms loading latencies, clean navigation rendering loops, and fluid responsive styling parameters.</li>
+        <li><strong>System Dependencies:</strong> Python ASGI Environment, FastAPI Software Suite, Pydantic Schema Layers, and Bootstrap 5 Component Core.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 3: Project Design Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Architectural Pattern:</strong> Monolithic Unified Routing Architecture Paradigm.</li>
+        <li><strong>Visual Style Matrix:</strong> High-contrast crisp white cards nesting key form containers overlaying an anti-glare slate-blue viewport theme workspace configuration (#ebf2f7).</li>
+        <li><strong>Route Mapping Data:</strong> Configured clean internal template filesystem loaders to inject raw tables directly into browser documents without complex runtime storage layers.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 4: Project Planning Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Milestone 1 (Sprint 1):</strong> Drafted system execution plans, built core backend server architecture in app.py, and routed base credential checkers.</li>
+        <li><strong>Milestone 2 (Sprint 2):</strong> Created frontend layout files (home_planner, party_planner, jewelry_planner) and programmed dynamic mathematical script handlers.</li>
+        <li><strong>Milestone 3 (Sprint 3):</strong> Patched CORS request security handlers, handled browser cache injection traps, and audited live hyperlink arrays.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 5: Project Development Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Backend Implementation:</strong> Coded an enterprise-grade asynchronous ASGI microserver engine using FastAPI in app.py that natively delivers clean file streams using local templates.</li>
+        <li><strong>Client-Side Processing Engine:</strong> Built isolated javascript evaluation logic layers inside the document templates to instantly evaluate budget metrics on-click without causing continuous local backend port connection strains.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 6: Project Testing Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Test Registry Endpoint:</strong> Local application network loopback interface framework (http://127.0.0).</li>
+        <li><strong>Unit Test Case (Syntax Recovery):</strong> Resolved nested python multi-line quote syntax literal crashes by separating front-end HTML assets out of app.py variables.</li>
+        <li><strong>Integration Test Case (CORS Block Recovery):</strong> Fixed local script blockages and "Connection Error" warnings by shifting processing execution directly into internal front-end functions.</li>
+        <li><strong>Validation Test Case (URL Rectification):</strong> Fixed a typo string inside the redirection map link array (amazon.inled+bulb) ensuring instant handshakes with global e-commerce servers.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 7: Project Documentation Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Technical Material Hosted:</strong> Consolidated application operations documentation, initialization setup instructions, and deployment run targets into a permanent master workflow configuration registry asset file.</li>
+        <li><strong>Evidence Archiving:</strong> Collected system performance reports and active terminal console data strings to prove operational execution logs.</li>
+    </ul>
+</div>
+
+<div class="phase-title">Phase 8: Project Demonstration Phase</div>
+<div class="content-box">
+    <ul>
+        <li><strong>Production Evaluation Workflow:</strong> Verified that a user successfully authenticates on the landing portal, accesses the master dashboard layout configuration layer, and correctly triggers budget allocations inside Home, Party, and Jewelry pipelines with functional external shopping redirects.</li>
+    </ul>
+</div>
+
+</body>
+</html>

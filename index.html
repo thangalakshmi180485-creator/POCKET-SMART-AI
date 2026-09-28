@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart AI - Dashboard</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <style>
+        body { background-color: #ebf2f7; font-family: 'Segoe UI', sans-serif; }
+        .navbar { background-color: #1a4f8a; padding: 12px 20px; }
+        .dashboard-header { background-color: #1a4f8a; color: white; padding: 40px 20px; text-align: center; border-radius: 0 0 20px 20px; }
+        .feature-card { background: white; border: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; padding: 25px; text-align: center; height: 100%; }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .icon-box { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; font-size: 1.8rem; }
+        .icon-home { background-color: #e3f2fd; color: #1a4f8a; }
+        .icon-party { background-color: #fdf2e9; color: #e67e22; }
+        .icon-jewelry { background-color: #f5eef8; color: #9b59b6; }
+        .btn-action { width: 100%; font-weight: bold; border-radius: 6px; padding: 10px; border: none; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#"><i class="fa-solid fa-wallet me-2"></i>PocketSmart AI</a>
+        <div class="navbar-nav ms-auto flex-row gap-3">
+            <a class="nav-link active" href="/home">🏠 Home Planner</a>
+            <a class="nav-link" href="/party">🎉 Party Planner</a>
+            <a class="nav-link" href="/jewelry">💎 Jewelry Planner</a>
+            <a class="nav-link" href="/history">📜 History</a>
+        </div>
+    </div>
+</nav>
+
+<div class="dashboard-header mb-4">
+    <h1 class="fw-bold">Welcome to PocketSmart AI 🤖💵</h1>
+    <p class="mb-0 text-white-50">Select an intelligent recommendation engine below to get started</p>
+</div>
+
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- 🏠 Home Planner Card -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-box icon-home"><i class="fa-solid fa-house-chimney"></i></div>
+                <h5 class="fw-bold mb-2">Home Interior Planner</h5>
+                <p class="text-muted small">Analyze fixtures, furniture, ceiling fans, and lighting allocations tailored to your budget.</p>
+                <button onclick="window.location.href='/home'" class="btn btn-action btn-primary text-white">Open Planner</button>
+            </div>
+        </div>
+        
+        <!-- 🎉 Party Planner Card -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-box icon-party"><i class="fa-solid fa-cake-candles"></i></div>
+                <h5 class="fw-bold mb-2">Party Event Planner</h5>
+                <p class="text-muted small">Manage catering menus, decoration kits, and entertainment needs for your guests seamlessly.</p>
+                <button onclick="window.location.href='/party'" class="btn btn-action btn-warning text-white" style="background-color: #e67e22;">Open Planner</button>
+            </div>
+        </div>
+
+        <!-- 💎 Jewelry Planner Card -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="icon-box icon-jewelry"><i class="fa-solid fa-gem"></i></div>
+                <h5 class="fw-bold mb-2">Jewelry & Outfit Planner</h5>
+                <p class="text-muted small">Upload your traditional outfit image and get matching AI jewelry purchase allocations.</p>
+                <button onclick="window.location.href='/jewelry'" class="btn btn-action btn-purple text-white" style="background-color: #9b59b6;">Open Planner</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
