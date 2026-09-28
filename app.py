@@ -17,17 +17,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 👥 பதிவு செய்யப்பட்ட அசல் பழைய பயனர்களின் பட்டியல்
+# 👥 பதிவு செய்யப்பட்ட அசல் பயனர்களின் பட்டியல்
 registered_users = ["sai", "admin", "user123", "aswathi", "sumathi", "sankari"]
 
-# 📊 ஹோம் பிளானர் பிரண்ட்எண்ட் ஜாவாஸ்கிரிப்ட் அனுப்பும் மாறிகள் கட்டமைப்பு
+# 🏠 ஹோம் பிளானர் பிரண்ட்எண்ட் ஜாவாஸ்கிரிப்ட் அனுப்பும் மாறிகள் கட்டமைப்பு
 class HomeBudgetInput(BaseModel):
     total_budget: float
     num_lights: int = 5
     num_fans: int = 4
     num_furniture: int = 2
 
-# 💰 [இங்கே தான் அமேசான், ஃப்ளிப்கார்ட் லைவ் லிங்க்குகள் கச்சிதமாக இணைக்கப்பட்டுள்ளது!]
+# 💰 அமேசான், ஃப்ளிப்கார்ட் லைவ் லிங்க்குகள் கச்சிதமாக இணைக்கப்பட்டுள்ளது
 @app.post("/generate-home")
 async def plan_home_budget(data: HomeBudgetInput):
     try:
@@ -118,9 +118,15 @@ async def login_check(username: str = Form(...), password: str = Form(...)):
     return RedirectResponse(url=f"/dashboard?user={username}", status_code=302)
 
 # --- 🔗 வெப் முகவரிகள் அலைன்மென்ட் மேப்பிங் ---
+
 @app.get("/", response_class=HTMLResponse)
+async def serve_landing_page():
+    # 🎯 பயனர் முதன்முதலில் உள்ளே வரும்போது அச்சு அசலான மெயின் முகப்புப் பக்கம் (index.html) லோடு ஆகும்!
+    return load_html_page("index.html")
+
 @app.get("/login", response_class=HTMLResponse)
 async def serve_login_page():
+    # 🎯 முகப்புப் பக்கத்தில் இருக்கும் 'Get Started' பட்டனை அமுக்கும்போது மட்டும் லாகின் பக்கம் லோடு ஆகும்!
     return load_html_page("login.html")
 
 @app.get("/register", response_class=HTMLResponse)
