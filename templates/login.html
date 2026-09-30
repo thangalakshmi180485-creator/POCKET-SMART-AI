@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart - Sign In</title>
+    <!-- பூட்ஸ்டார்ப் லைவ் லிங்க் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #ebf2f7 !important; 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            height: 100vh !important; 
+            margin: 0 !important;
+            font-family: 'Segoe UI', sans-serif !important;
+        }
+        .auth-card { 
+            background: white !important; 
+            border-radius: 12px !important; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1) !important; 
+            padding: 35px !important; 
+            width: 100% !important; 
+            max-width: 400px !important; 
+            box-sizing: border-box !important;
+        }
+        .form-group-custom { margin-bottom: 25px !important; }
+        .form-label-custom { display: block !important; font-weight: 600 !important; color: #4a5568 !important; margin-bottom: 8px !important; }
+        .form-control-custom { width: 100% !important; padding: 12px !important; border: 1px solid #cbd5e0 !important; border-radius: 6px !important; }
+        .btn-auth-custom { 
+            background-color: #1a4f8a !important; 
+            color: white !important; 
+            width: 100% !important; 
+            padding: 12px !important; 
+            font-weight: bold !important; 
+            border-radius: 6px !important; 
+            border: none !important;
+            cursor: pointer !important;
+            margin-top: 10px !important;
+        }
+        .btn-auth-custom:hover { background-color: #123963 !important; }
+    </style>
+</head>
+<body>
+
+<div class="auth-card">
+    <h3 style="text-align: center; font-weight: bold; margin-bottom: 30px; color: #1a4f8a; font-size: 1.6rem; margin-top: 0;">Sign In</h3>
+    
+    <!-- 🔐 onsubmit மூலமாக பெயரை சரியாக மெமரியில் சேமிக்கும் படிவம் -->
+    <form action="/login-check" method="post" onsubmit="saveNameBeforeSubmit()">
+        
+        <div class="form-group-custom">
+            <label class="form-label-custom">Username or Email</label>
+            <input type="text" name="username" id="userInput" class="form-control-custom" placeholder="Enter your username (e.g. sai)" required>
+        </div>
+        
+        <div class="form-group-custom">
+            <label class="form-label-custom">Password</label>
+            <input type="password" name="password" class="form-control-custom" placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="btn-auth-custom w-100">Login</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 20px; margin-bottom: 0; color: #718096; font-size: 0.9rem;">
+        Don't have an account? <a href="/register" style="text-decoration: none; font-weight: bold; color: #1a4f8a;">Create Account</a>
+    </p>
+</div>
+
+<script>
+// லாகின் பட்டனை அமுக்கும் போது பயனர் அடித்த பெயரை பிரவுசர் மெமரியில் கடத்தும் மிக முக்கியமான லாஜிக்
+function saveNameBeforeSubmit() {
+    const username = document.getElementById('userInput').value;
+    localStorage.setItem('pocketsmart_username', username);
+}
+</script>
+</body>
+</html>

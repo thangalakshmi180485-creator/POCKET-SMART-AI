@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart - Create Account</title>
+    <!-- பூட்ஸ்டார்ப் டிசைன் லைவ் லிங்க் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body { background-color: #ebf2f7; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .register-card { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 40px; width: 100%; max-width: 400px; border: 1px solid #e2e8f0; }
+        .btn-register { background-color: #1a4f8a; color: white; width: 100%; font-weight: bold; border-radius: 4px; padding: 10px; border: none; margin-top: 20px; cursor: pointer; }
+        .btn-register:hover { background-color: #2b6cb0; }
+    </style>
+</head>
+<body>
+
+<div class="register-card shadow-sm">
+    <h4 class="text-center fw-bold mb-4" style="color: #0b2240;">Create Account</h4>
+    
+    <!-- 🎯 /register-save எண்ட்பாயிண்டிற்குப் புதிய விபரங்களை நேரடியாக அனுப்பும் அசல் படிவம்! -->
+    <form action="/register-save" method="post">
+        <div class="mb-3">
+            <label class="form-label text-muted small">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter any custom name" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label text-muted small">Email Address</label>
+            <input type="email" name="email" class="form-control" placeholder="name@example.com" required>
+        </div>
+        <div class="mb-4">
+            <label class="form-label text-muted small">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        
+        <!-- 💡 இப்போ இந்த பட்டனை அமுக்கினால் எர்ரர் வராமல் நேராக /register-save-க்குள் சென்று விபரங்களைச் சேமிக்கும்! -->
+        <button type="submit" class="btn-register shadow-sm">Register</button>
+    </form>
+    
+    <div class="text-center mt-3">
+        <a href="/login" class="text-decoration-none small text-secondary">Already have an account? Sign In</a>
+    </div>
+</div>
+
+</body>
+</html>

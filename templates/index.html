@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart AI - Smart Budget Planning</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #ffffff; color: #2d3748; margin:0; padding:0; }
+        .navbar { background-color: #0b2240; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .navbar .logo { color: white; font-size: 1.3rem; font-weight: bold; text-decoration: none; }
+        .navbar-links a { color: rgba(255,255,255,0.8); text-decoration: none; margin-left: 25px; font-size: 0.9rem; font-weight: 500; }
+        .navbar-links a:hover { color: white; }
+        .btn-nav-started { background-color: #1a4f8a; color: white !important; padding: 6px 18px; border-radius: 4px; font-weight: bold; }
+        
+        /* 🔵 Hero Section Styling (Screenshot 1) */
+        .hero-section { background-color: #0b2240; color: white; text-align: center; padding: 80px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .hero-section h1 { font-size: 2.3rem; font-weight: bold; margin-bottom: 15px; }
+        .hero-section p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 30px auto; }
+        .btn-hero-started { background-color: #2b6cb0; color: white; padding: 10px 25px; font-weight: bold; border-radius: 4px; text-decoration: none; margin-right: 15px; font-size: 0.9rem; }
+        .btn-hero-started:hover { background-color: #1a4f8a; }
+        .btn-hero-learn { background-color: transparent; color: white; padding: 10px 25px; font-weight: bold; border-radius: 4px; text-decoration: none; border: 1px solid white; font-size: 0.9rem; }
+        
+        /* 🏠 Planner Section Styling (Screenshot 1) */
+        .section-title-box { text-align: center; margin-top: 60px; margin-bottom: 40px; }
+        .section-title-box h3 { font-weight: bold; color: #0b2240; }
+        .section-title-box p { color: #718096; font-size: 0.85rem; }
+        .planner-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .planner-card-home { background: white; border-radius: 6px; border: 1px solid #e2e8f0; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); text-align: center; }
+        .planner-card-home .icon { font-size: 2.2rem; color: #1a4f8a; margin-bottom: 15px; }
+        .planner-card-home h5 { font-size: 0.95rem; font-weight: bold; color: #2d3748; margin-bottom: 10px; }
+        .planner-card-home p { font-size: 0.8rem; color: #718096; line-height: 1.5; margin: 0; }
+        
+        /* 💬 Testimonials Section Styling (Screenshot 2) */
+        .testimonial-section { background-color: #f8fafc; padding: 60px 20px; margin-top: 80px; text-align: center; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 30px auto 0 auto; }
+        .testimonial-card { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .testimonial-card p { font-size: 0.8rem; color: #4a5568; font-style: italic; margin-bottom: 15px; }
+        .testimonial-user { font-size: 0.78rem; font-weight: bold; color: #2d3748; display: block; }
+        .testimonial-role { font-size: 0.72rem; color: #a0aec0; }
+        
+        /* 📢 Ready Optimize Footer Banner (Screenshot 2) */
+        .ready-banner { background-color: #1a4f8a; color: white; text-align: center; padding: 50px 20px; }
+        .ready-banner h4 { font-weight: bold; margin-bottom: 12px; font-size: 1.3rem; }
+        .ready-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 25px; }
+        .btn-ready-signin { background-color: white; color: #1a4f8a; padding: 8px 22px; font-weight: bold; border-radius: 4px; text-decoration: none; margin-right: 12px; font-size: 0.85rem; }
+        .btn-ready-create { background-color: #0b2240; color: white; padding: 8px 22px; font-weight: bold; border-radius: 4px; text-decoration: none; font-size: 0.85rem; border: 1px solid #0b2240; }
+        
+        /* 📋 Footer Part Styling (Screenshot 2) */
+        .footer-part { background-color: #0b2240; color: white; padding: 40px 60px; display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-logo-side h4 { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
+        .footer-logo-side p { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+        .footer-column h5 { font-size: 0.85rem; font-weight: bold; color: white; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-column a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; display: block; margin-bottom: 10px; }
+        .footer-column a:hover { color: white; }
+    </style>
+</head>
+<body>
+
+<!-- 🌐 Navbar -->
+<nav class="navbar shadow-sm">
+    <a href="/" class="logo">PocketSmart</a>
+    <div class="navbar-links">
+        <a href="#features">Features</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="/login">Sign In</a>
+        <a href="/login" class="btn-nav-started">Get Started</a>
+    </div>
+</nav>
+
+<!-- 🔵 Hero Section (Screenshot 1) -->
+<div class="hero-section">
+    <h1>PocketSmart</h1>
+    <h1>AI-Powered Budget Planning for Everyday Needs</h1>
+    <p>Make smarter financial decisions with personalized budget recommendations for home interiors, parties, and jewelry purchases. Our AI helps you get the most value for your money.</p>
+    <div class="d-flex justify-content-center">
+        <a href="/login" class="btn-hero-started">Get Started</a>
+        <a href="/login" class="btn-hero-learn">Learn More</a>
+    </div>
+</div>
+
+<!-- 🏠 Our Smart Budget Planners (Screenshot 1) -->
+<div class="section-title-box">
+    <h3>Our Smart Budget Planners</h3>
+    <p>Discover how PocketSmart helps you make better financial decisions across different areas of your life</p>
+</div>
+
+<div class="planner-grid">
+    <div class="planner-card-home">
+        <div class="icon">🏠</div>
+        <h5>Home Interior Budget Planner</h5>
+        <p>Get personalized recommendations for furniture, lighting, and decor that fit your style preferences and budget constraints. Our AI helps you create a beautiful space without overspending.</p>
+    </div>
+    <div class="planner-card-home">
+        <div class="icon">🎉</div>
+        <h5>Party Budget Planner</h5>
+        <p>Plan your perfect event with smart budget allocations for venue, catering, decorations, and entertainment. Our AI suggests the best ways to create memorable events while staying within your budget.</p>
+    </div>
+    <div class="planner-card-home">
+        <div class="icon">💎</div>
+        <h5>Jewelry Budget Planner</h5>
+        <p>Find the ideal jewelry pieces for any occasion that match your outfit and budget. Our AI recommends options based on your style preferences, occasion, and available budget.</p>
+    </div>
+</div>
+
+<!-- 💬 Testimonials Section (Screenshot 2) -->
+<div id="testimonials" class="testimonial-section">
+    <h4 class="fw-bold text-center" style="color: #0b2240;">What Our Users Say</h4>
+    <p class="text-muted text-center small">Real experiences from people who have transformed their financial planning with PocketSmart</p>
+    
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <p>"PocketSmart helped me furnish my new apartment without breaking the bank! The recommendations were spot on and I saved nearly 20% of my original budget!"</p>
+            <span class="testimonial-user">Sarah K.</span>
+            <span class="testimonial-role">Home Owner</span>
+        </div>
+        <div class="testimonial-card">
+            <p>"Planning my daughter's birthday party was so much easier with PocketSmart's budget breakdown. The AI suggestions for affordable decorations and catering options were fantastic."</p>
+            <span class="testimonial-user">Michael R.</span>
+            <span class="testimonial-role">Parent</span>
+        </div>
+        <div class="testimonial-card">
+            <p>"The jewelry recommendations perfectly matched my outfit for the wedding. Saved me hours of searching and I received so many compliments on my accessories!"</p>
+            <span class="testimonial-user">Priya M.</span>
+            <span class="testimonial-role">Fashion Enthusiast</span>
+        </div>
+    </div>
+</div>
+
+<!-- 📢 Ready to Optimize Your Budget? (Screenshot 2) -->
+<div class="ready-banner">
+    <h4>Ready to Optimize Your Budget?</h4>
+    <p>Join PocketSmart today and start making smarter financial decisions across all areas of your life.</p>
+    <div class="d-flex justify-content-center">
+        <a href="/login" class="btn-ready-signin">Sign In</a>
+        <a href="/login" class="btn-ready-create">Create Account</a>
+    </div>
+</div>
+
+<!-- 📋 Footer Part (Screenshot 2) -->
+<footer class="footer-part">
+    <div class="footer-logo-side">
+        <h4>PocketSmart</h4>
+        <p>Smart budget planning solution for home, party, and jewelry purchases. Empowering you to spend wisely.</p>
+    </div>
+    <div class="footer-column">
+        <h5>Company</h5>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+    </div>
+    <div class="footer-column">
+        <h5>Product</h5>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+    </div>
+    <div class="footer-column">
+        <h5>Resources</h5>
+        <a href="#">Blog</a>
+        <a href="#">Help Center</a>
+    </div>
+    <div class="footer-column">
+        <h5>Legal</h5>

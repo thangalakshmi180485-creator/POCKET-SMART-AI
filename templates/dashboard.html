@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart AI - User Dashboard</title>
+    <!-- பூட்ஸ்டார்ப் மற்றும் ஃபான்ட் டிசைன் லைவ் லிங்க்குகள் -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <link href="https://cloudflare.com" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #ebf2f7 !important; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .navbar-custom { 
+            background-color: #0b2240 !important; 
+            padding: 12px 30px !important;
+            color: white !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            font-size: 0.85rem !important;
+        }
+        .navbar-brand-custom {
+            font-size: 1.1rem !important;
+            font-weight: bold !important;
+            color: white !important;
+            text-decoration: none !important;
+        }
+        .navbar-links {
+            display: flex !important;
+            gap: 20px !important;
+        }
+        .navbar-links a {
+            color: rgba(255,255,255,0.8) !important;
+            text-decoration: none !important;
+        }
+        .navbar-links a.active {
+            color: white !important;
+            font-weight: bold !important;
+        }
+        .dashboard-header { 
+            background-color: #1a4f8a !important; 
+            color: white !important; 
+            padding: 55px 20px !important; 
+            text-align: center !important; 
+        }
+        .dashboard-header h1 {
+            font-weight: bold !important;
+            margin-bottom: 12px !important;
+            font-size: 2.2rem !important;
+        }
+        .dashboard-container {
+            max-width: 1200px !important;
+            margin: 40px auto !important;
+            padding: 0 20px !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* 3 கார்டுகளும் பக்கத்து பக்கத்தில் அழகாக அமையும் கச்சிதமான கிரிட் லேஅவுட் */
+        .card-row {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important; /* துல்லியமாக 3 காலம்கள் பிரிக்கிறது */
+            gap: 20px !important;
+        }
+        .planner-card { 
+            background: white !important; 
+            border-radius: 12px !important; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important; 
+            overflow: hidden !important; 
+            display: flex !important; 
+            flex-direction: column !important; 
+            justify-content: space-between !important;
+            box-sizing: border-box !important;
+            transition: transform 0.2s;
+        }
+        .planner-card:hover { transform: translateY(-5px); }
+        
+        .card-img-box { 
+            height: 140px !important; 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            font-size: 3.2rem !important; 
+        }
+        .bg-home-img { background: linear-gradient(135deg, #abc4ff, #e3f2fd) !important; }
+        .bg-party-img { background: linear-gradient(135deg, #fbc4ab, #fdf2e9) !important; }
+        .bg-jewelry-img { background: linear-gradient(135deg, #e2afff, #f5eef8) !important; }
+        
+        .card-body-custom { 
+            padding: 20px !important; 
+            text-align: left !important;
+        }
+        .card-body-custom h5 {
+            font-weight: bold !important;
+            margin-bottom: 10px !important;
+            font-size: 1.05rem !important;
+            color: #2d3748 !important;
+        }
+        .card-body-custom p {
+            color: #718096 !important;
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+            margin-bottom: 20px !important;
+            height: 45px !important;
+            overflow: hidden !important;
+        }
+        .btn-get-started { 
+            background-color: #1a4f8a !important; 
+            color: white !important; 
+            width: 100% !important; 
+            padding: 10px !important; 
+            font-weight: bold !important; 
+            border-radius: 20px !important; 
+            border: none !important;
+            cursor: pointer !important;
+            font-size: 0.85rem !important;
+            display: block !important;
+            text-align: center !important;
+            text-decoration: none !important;
+        }
+        
+        .orange-history-btn-box {
+            text-align: center !important;
+            margin: 35px 0 !important;
+        }
+        .btn-orange-history {
+            background-color: #f39c12 !important;
+            color: white !important;
+            font-weight: bold !important;
+            padding: 12px 40px !important;
+            border-radius: 25px !important;
+            border: none !important;
+            cursor: pointer !important;
+            font-size: 0.9rem !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+        }
+
+        .activity-box { 
+            background: white !important; 
+            border-radius: 12px !important; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.05) !important; 
+            padding: 30px !important; 
+            box-sizing: border-box !important;
+        }
+        .activity-title-header {
+            font-weight: bold !important;
+            margin-bottom: 20px !important;
+            color: white !important;
+            background-color: #1a4f8a !important;
+            padding: 12px 20px !important;
+            border-radius: 6px !important;
+            font-size: 1rem !important;
+        }
+        .activity-item { 
+            display: flex !important; 
+            align-items: center !important; 
+            gap: 15px !important; 
+            padding: 15px 20px !important; 
+            border-bottom: 1px solid #edf2f7 !important; 
+            background-color: #f8fafc !important;
+            border-radius: 6px !important;
+            margin-bottom: 10px !important;
+        }
+        .icon-circle { 
+            width: 35px !important; 
+            height: 35px !important; 
+            border-radius: 50% !important; 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            color: white !important; 
+            font-weight: bold !important;
+        }
+        .bg-home { background-color: #2b6cb0 !important; }
+        .bg-party { background-color: #dd6b20 !important; }
+        .bg-jewelry { background-color: #6b46c1 !important; }
+        .activity-details h6 { font-weight: bold !important; margin: 0 0 2px 0 !important; color: #2d3748 !important; font-size: 0.9rem !important; }
+        .activity-details small { color: #718096 !important; font-size: 0.8rem !important; }
+        footer { background-color: #0b2240 !important; color: rgba(255,255,255,0.5) !important; text-align: center; padding: 15px; font-size: 0.8rem; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar-custom shadow-sm">
+    <a href="#" class="navbar-brand-custom">PocketSmart</a>
+    <div class="navbar-links">
+        <a href="/home">🏠 Home Planner</a>
+        <a href="/party">🎉 Party Planner</a>
+        <a href="/jewelry">💎 Jewelry Planner</a>
+        <a href="/history">📜 History</a>
+        <a href="/login" style="margin-left:15px; color:rgba(255,255,255,0.5);">Logout</a>
+    </div>
+</div>
+
+<div class="dashboard-header shadow-sm">
+    <!-- 🔀 நீங்கள் கேட்ட டைனமிக் யூசர்நேம் வெல்கம் பேனர் மார்க்கர் -->
+    <h1>Welcome, <span id="dynamicUser">User</span>!</h1>
+    <p style="color: rgba(255,255,255,0.7); margin: 0; font-size: 0.95rem;">Choose a budget planner to get started with your personalized financial planning experience</p>
+</div>
+
+<div class="dashboard-container">
+    <div class="card-row">
+        <!-- 🏠 Card 1: Home Budget Planner -->
+        <div class="planner-card shadow-sm">
+            <div class="card-img-box bg-home-img">🏠</div>
+            <div class="card-body-custom">
+                <h5>Home Budget Planner</h5>
+                <p>Plan your interior design budget efficiently with AI recommendations.</p>
+                <a href="/home" class="btn-get-started">Get Started</a>
+            </div>
+        </div>
+
+        <!-- 🎉 Card 2: Party Budget Planner -->
+        <div class="planner-card shadow-sm">
+            <div class="card-img-box bg-party-img">🎉</div>
+            <div class="card-body-custom">
+                <h5>Party Budget Planner</h5>
+                <p>Plan your perfect event with custom venue packaging algorithms.</p>
+                <a href="/party" class="btn-get-started">Get Started</a>
+            </div>
+        </div>
+
+        <!-- 💎 Card 3: Jewelry Budget Planner (பக்கத்து பக்கத்தில் நேர்த்தியாக வந்துவிடும்) -->
+        <div class="planner-card shadow-sm">
+            <div class="card-img-box bg-jewelry-img">💎</div>
+            <div class="card-body-custom">
+                <h5>Jewelry Budget Planner</h5>
+                <p>Find the ideal jewelry pieces that match your outfits perfectly.</p>
+                <a href="/jewelry" class="btn-get-started">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="orange-history-btn-box">
+        <a href="/history" class="btn-orange-history">View All Recommendation History</a>
+    </div>
+
+    <div class="activity-box shadow-sm">
+        <div class="activity-title-header"><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</div>
+        <div class="activity-item shadow-sm">
+            <div class="icon-circle bg-home">H</div>
+
+            <!-- லாகின் பக்கத்தில் அடித்த பெயரை பிரித்தெடுத்து வெல்கம் பேனரில் காட்டும் புதிய லைவ் ஸ்கிரிப்ட் -->
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const userNameParam = urlParams.get('user');
+
+    if (userNameParam) {
+        document.getElementById('dynamicUser').innerText = userNameParam;
+    } else {
+        document.getElementById('dynamicUser').innerText = "User";
+    }
+</script>
+<footer>
+     &copy; 2026 PocketSmart. All rights reserved.
+</footer>
+
+</body>
+</html>
