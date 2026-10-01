@@ -93,27 +93,39 @@ function previewOutfit(event) {
 }
 
 function generateJewelryOfficialLayout() {
+    // 1. இன்புட்டில் இருந்து பயனர் டைப் செய்யும் அசல் பட்ஜெட் தொகையைப் பெறுதல்
     const budget = parseFloat(document.getElementById('jewelryBudget').value) || 5000;
+    localStorage.setItem("live_jewelry_budget_value", document.getElementById('jewelryBudget').value);
     const outputDiv = document.getElementById('jewelryOutput');
     outputDiv.classList.remove('d-none');
     outputDiv.innerHTML = "<p class='text-center fw-bold text-primary py-3'>PocketSmart AI is mapping outfit design vectors...</p>";
     
     setTimeout(function() {
-        // ஜாவாஸ்கிரிப்ட் ஸ்ட்ரிங் முரண்பாடுகளைத் தவிர்க்க சிங்கிள் ஸ்ட்ரிங் அலைன்மென்ட் முறை!
+        // 🎯 2. நீங்க கேட்ட அதே துல்லியமான பக்கா மேக்ஸ் லாஜிக் கணக்கீடு!
+        // Bracelet = 10% | Ring = 14% | Total Spent = 24%
+        const braceletCost = budget * 0.10;
+        const ringCost = budget * 0.14;
+        const totalSpent = braceletCost + ringCost;
+        const remainingBudget = budget - totalSpent;
+
+        // ஜாவாஸ்கிரிப்ட் ஸ்ட்ரிங் முரண்பாடுகளைத் தவிர்க்க உங்களது அசல் சிங்கிள் ஸ்ட்ரிங் அலைன்மென்ட் முறை!
         let html = '<div class="output-card">';
         html += '<h5 class="fw-bold mb-3 text-dark text-center" style="font-size:1.1rem;">Your Personalized Jewelry Recommendations</h5>';
         html += '<div class="section-header-blue"><i class="fa-solid fa-wallet"></i> Budget Summary</div>';
-        html += '<div class="info-row-box fw-bold text-secondary"><span>Total Budget: $' + budget.toFixed(2) + '</span><span>Remaining Budget: <span class="text-success">$800.00</span></span></div>';
+        
+        // 💡 இப்போ டோட்டல் பட்ஜெட் மற்றும் ரிமைனிங் பட்ஜெட் நீங்க கொடுக்கும் தொகைக்கு ஏத்தவாறு கச்சிதமாக மாறும்!
+        html += '<div class="info-row-box fw-bold text-secondary"><span>Total Budget: $' + budget.toFixed(2) + '</span><span>Remaining Budget: <span class="text-success">$' + remainingBudget.toFixed(2) + '</span></span></div>';
+        
         html += '<div class="section-header-blue"><i class="fa-solid fa-shirt"></i> Outfit Analysis</div>';
         html += '<div class="info-row-box text-muted" style="font-size:0.82rem;"><span>Colors: Blue, white</span><span>Style: casual</span><span>Formality: informal</span></div>';
         html += '<div class="section-header-blue"><i class="fa-solid fa-gem"></i> Jewelry Recommendations</div>';
         
-        // Bracelet
-        html += '<div class="sub-item-header"><span>bracelet</span><span class="price-badge">$500.00</span></div>';
+        // 💡 3. பிரேஸ்லெட் விலை 10% ஆகத் துல்லியமாகக் கணக்கிடப்பட்டு கார்டில் மாறுகிறது!
+        html += '<div class="sub-item-header"><span>bracelet</span><span class="price-badge">$' + braceletCost.toFixed(2) + '</span></div>';
         html += '<div class="p-3 border rounded bg-light mt-1" style="font-size:0.84rem;"><p class="text-muted m-0">A simple, braided leather bracelet with metal accents. This complements the casual style of the outfit without being flashy.</p><div class="links-flex"><a href="https://amazon.in" target="_blank" class="shop-link-btn">Amazon</a><a href="https://flipkart.com" target="_blank" class="shop-link-btn">Flipkart</a><a href="#" class="shop-link-btn">Bluestone</a><a href="#" class="shop-link-btn">CaratLane</a></div></div>';
         
-        // Ring
-        html += '<div class="sub-item-header"><span>ring</span><span class="price-badge">$700.00</span></div>';
+        // 💡 4. ரிங் விலை 14% ஆகத் துல்லியமாகக் கணக்கிடப்பட்டு கார்டில் மாறுகிறது!
+        html += '<div class="sub-item-header"><span>ring</span><span class="price-badge">$' + ringCost.toFixed(2) + '</span></div>';
         html += '<div class="p-3 border rounded bg-light mt-1" style="font-size:0.84rem;"><p class="text-muted m-0">A silver or dark grey metal ring with a minimalist design. Avoid anything too large to maintain the casual feel.</p><div class="links-flex"><a href="https://amazon.in" target="_blank" class="shop-link-btn">Amazon</a><a href="https://flipkart.com" target="_blank" class="shop-link-btn">Flipkart</a><a href="#" class="shop-link-btn">CaratLane</a></div></div>';
         
         html += '</div>';

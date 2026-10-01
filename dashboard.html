@@ -238,23 +238,59 @@
     <div class="orange-history-btn-box">
         <a href="/history" class="btn-orange-history">View All Recommendation History</a>
     </div>
-
+<!-- 💡 இந்த பாக்ஸிற்குள் தான் உங்களது அசல் ரீசண்ட் ஆக்டிவிட்டி விபரங்கள் கச்சிதமாக வந்து லோடு ஆகும்! -->
     <div class="activity-box shadow-sm">
         <div class="activity-title-header"><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</div>
-        <div class="activity-item shadow-sm">
-            <div class="icon-circle bg-home">H</div>
+        <div id="liveRecentActivityList" class="d-flex flex-column gap-2"></div>
+    </div>
+</div>
 
-            <!-- லாகின் பக்கத்தில் அடித்த பெயரை பிரித்தெடுத்து வெல்கம் பேனரில் காட்டும் புதிய லைவ் ஸ்கிரிப்ட் -->
 <script>
+// 🎯 பயனர் லாகின் பெயரையும், கடைசியாகப் பார்த்த பட்ஜெட் ஆக்டிவிட்டிகளையும் காட்டும் மாஸ்டர் லாக் லாஜிக்!
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. வெல்கம் பேனர் யூசர்நேம் ட்ராக்கர் செட்டப்
     const urlParams = new URLSearchParams(window.location.search);
     const userNameParam = urlParams.get('user');
-
     if (userNameParam) {
         document.getElementById('dynamicUser').innerText = userNameParam;
     } else {
         document.getElementById('dynamicUser').innerText = "User";
     }
+
+    // 2. ரீசண்ட் ஆக்டிவிட்டி பாக்ஸ் செட்டப்
+    const activityList = document.getElementById('liveRecentActivityList');
+    if (!activityList) return;
+
+    const homeBudget = localStorage.getItem("live_home_budget_value");
+    const partyBudget = localStorage.getItem("live_party_budget_value");
+    const jewelryBudget = localStorage.getItem("live_jewelry_budget_value");
+
+    let activityHtml = '';
+
+    // 🏠 ஹோம் பிளான் ஆக்டிவிட்டி
+    if (homeBudget) {
+        activityHtml += '<div class="activity-item shadow-sm"><div class="icon-circle bg-home">H</div><div class="activity-details"><h6>Home Budget Simulation Run</h6><small class="text-muted">Total Budget: $' + parseFloat(homeBudget).toLocaleString('en-US') + ' | Boundary configurations calculated.</small></div></div>';
+    }
+
+    // 🎉 பார்ட்டி பிளான் ஆக்டிவிட்டி
+    if (partyBudget) {
+        activityHtml += '<div class="activity-item shadow-sm" style="border-left: 4px solid #dd6b20 !important;"><div class="icon-circle bg-party">P</div><div class="activity-details"><h6>Party Budget Simulation Run</h6><small class="text-muted">Total Budget: ₹' + parseFloat(partyBudget).toLocaleString('en-IN') + ' | Event expenditures partitioned perfectly.</small></div></div>';
+    }
+
+    // 💎 ஜுவல்லரி பிளான் ஆக்டிவிட்டி
+    if (jewelryBudget) {
+        activityHtml += '<div class="activity-item shadow-sm" style="border-left: 4px solid #6b46c1 !important;"><div class="icon-circle bg-jewelry">J</div><div class="activity-details"><h6>Jewelry Budget Simulation Run</h6><small class="text-muted">Total Budget: $' + parseFloat(jewelryBudget).toLocaleString('en-US') + ' | Matching attire vectors mapped safely.</small></div></div>';
+    }
+
+    // ஒருவேளை இன்னும் எந்த பிளானரும் சோதிக்கவில்லை என்றால்
+    if (activityHtml === '') {
+        activityHtml = '<p class="text-center text-muted small fw-bold py-3 m-0">No recent planning simulation activities logged yet.</p>';
+    }
+
+    activityList.innerHTML = activityHtml;
+});
 </script>
+
 <footer>
      &copy; 2026 PocketSmart. All rights reserved.
 </footer>

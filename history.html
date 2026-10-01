@@ -38,32 +38,7 @@
                         <th>Action Buttons</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- 🏠 Row 1: Home Planner -->
-                    <tr>
-                        <td><strong>🏠 Home Budget Plan</strong></td>
-                        <td class="text-muted">Total Budget: $5,000.00 | Lights: 5 | Fans: 4 | Furniture: 2</td>
-                        <td>
-                            <a href="/home" class="btn-full-analysis"><i class="fa-solid fa-chart-line me-1"></i> View Full Analysis</a>
-                        </td>
-                    </tr>
-                    <!-- 🎉 Row 2: Party Planner -->
-                    <tr>
-                        <td><strong>🎉 Party Budget Plan</strong></td>
-                        <td class="text-muted">Total Budget: ₹5,000.00 | Guests: 2 | Type: Wedding | Venue: Home</td>
-                        <td>
-                            <a href="/party" class="btn-full-analysis"><i class="fa-solid fa-chart-line me-1"></i> View Full Analysis</a>
-                        </td>
-                    </tr>
-                    <!-- 💎 Row 3: Jewelry Planner -->
-                    <tr>
-                        <td><strong>💎 Jewelry Budget Plan</strong></td>
-                        <td class="text-muted">Total Budget: $5,000.00 | Occasion: Birthday | Analysis: Casual Outfit</td>
-                        <td>
-                            <a href="/jewelry" class="btn-full-analysis"><i class="fa-solid fa-chart-line me-1"></i> View Full Analysis</a>
-                        </td>
-                    </tr>
-                </tbody>
+            <tbody id="liveHistoryTableBody"></tbody>
             </table>
         </div>
         <div class="mt-4">
@@ -71,6 +46,69 @@
         </div>
     </div>
 </div>
+<script>
+// 🎯 ஹோம், பார்ட்டி, ஜுவல்லரி ஆகிய மூன்றும் நீங்கள் உள்ளிட்ட அசல் பட்ஜெட் தொகைகளுடன் வரிசையாகக் காட்டும் மாஸ்டர் லாஜிக்!
+document.addEventListener("DOMContentLoaded", function() {
+    const tableBody = document.getElementById('liveHistoryTableBody');
+    if (!tableBody) return;
 
+    // 💾 பிரவுசரின் லைவ் நினைவக முகவரியிலிருந்து பட்ஜெட் அளவுகளைப் பெறுகிறது
+    const urlParams = new URLSearchParams(window.location.search);
+    const budgetParam = parseFloat(urlParams.get('budget'));
+    const referrer = document.referrer;
+
+    // 💡 பயனர் உள்ளிட்ட அசல் மதிப்பை உடனுக்குடன் பிரவுசர் நினைவகத்தில் லாக் செய்கிறது
+    if (budgetParam && budgetParam > 0) {
+        if (referrer.includes("home") || window.location.href.includes("home")) {
+            localStorage.setItem("live_home_budget_value", budgetParam);
+        } else if (referrer.includes("party") || window.location.href.includes("party")) {
+            localStorage.setItem("live_party_budget_value", budgetParam);
+        } else if (referrer.includes("jewelry") || window.location.href.includes("jewelry")) {
+            localStorage.setItem("live_jewelry_budget_value", budgetParam);
+        }
+    }
+
+    // 📊 பிரவுசர் நினைவகத்தில் இருக்கும் அசல் விபரங்களை மட்டும் துல்லியமாக எடுக்கிறது
+    const homeBudget = localStorage.getItem("live_home_budget_value");
+    const partyBudget = localStorage.getItem("live_party_budget_value");
+    const jewelryBudget = localStorage.getItem("live_jewelry_budget_value");
+
+    let htmlRows = '';
+
+    // 🏠 1. ஹோம் பிளானர் பட்ஜெட் விபரம்
+    if (homeBudget) {
+        htmlRows += '<tr>';
+        htmlRows += '<td><strong>🏠 Home Budget Plan</strong></td>';
+        htmlRows += '<td class="text-muted">Total Budget: $' + parseFloat(homeBudget).toLocaleString('en-US', {minimumFractionDigits: 2}) + ' | Dynamic allocation matrices applied successfully based on your custom boundaries.</td>';
+        htmlRows += '<td><a href="/home?budget=' + homeBudget + '" class="btn-full-analysis"><i class="fa-solid fa-chart-line me-1"></i> View Full Analysis</a></td>';
+        htmlRows += '</tr>';
+    }
+
+    // 🎉 2. பார்ட்டி பிளானர் பட்ஜெட் விபரம்
+    if (partyBudget) {
+        htmlRows += '<tr>';
+        htmlRows += '<td><strong>🎉 Party Budget Plan</strong></td>';
+        htmlRows += '<td class="text-muted">Total Party Budget: ₹' + parseFloat(partyBudget).toLocaleString('en-IN', {minimumFractionDigits: 2}) + ' | Spent expenditures computed flawlessly for your event layout grid.</td>';
+        htmlRows += '<td><a href="/party?budget=' + partyBudget + '" class="btn-full-analysis"><i class="fa-solid fa-chart-line me-1"></i> View Full Analysis</a></td>';
+        htmlRows += '</tr>';
+    }
+
+    // 💎 3. ஜுவல்லரி பிளானர் பட்ஜெட் விபரம் (இப்போ எந்த சின்டாக்ஸ் எர்ரரும் இல்லாமல் கச்சிதமாக லோடு ஆகும்!)
+    if (jewelryBudget) {
+        htmlRows += '<tr>';
+        htmlRows += '<td><strong>💎 Jewelry Budget Plan</strong></td>';
+        htmlRows += '<td class="text-muted">Total Jewelry Budget: $' + parseFloat(jewelryBudget).toLocaleString('en-US', {minimumFractionDigits: 2}) + ' | Partition models matching casual/formal attire vectors applied safely.</td>';
+        htmlRows += '<td><a href="/jewelry?budget=' + jewelryBudget + '" class="btn-full-analysis"><i class="fa-solid fa-gem me-1"></i> View Full Analysis</a></td>';
+        htmlRows += '</tr>';
+    }
+
+    // 💡 ஒருவேளை மூன்றும் இன்னும் பார்க்கவில்லை என்றால் மட்டும் காட்டும் வெற்று வரி
+    if (htmlRows === '') {
+        htmlRows = '<tr><td colspan="3" class="text-center py-4 text-muted fw-bold">No historical simulation records detected. Run a planner module to populate arrays!</td></tr>';
+    }
+
+    tableBody.innerHTML = htmlRows;
+});
+</script>
 </body>
 </html>

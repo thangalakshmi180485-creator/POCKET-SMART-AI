@@ -15,13 +15,13 @@
         .main-card { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px; margin-top: 20px; border: 1px solid #e2e8f0; }
         .box-section { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
         .box-title { font-size: 0.95rem; font-weight: bold; color: #1a4f8a; margin-bottom: 15px; }
-        .btn-generate { background-color: #1a4f8a; color: white; padding: 12px 35px; font-weight: bold; border-radius: 25px; border: none; font-size: 0.9rem; display: block; margin: 25px auto; cursor: pointer; text-decoration: none; text-align: center; width: fit-content; }
+        .btn-generate { background-color: #1a4f8a; color: white; padding: 12px 35px; font-weight: bold; border-radius: 25px; border: none; font-size: 0.9rem; display: block; margin: 25px auto; cursor: pointer; }
         .card-summary { background-color: #2b6cb0; color: white; border-radius: 6px; padding: 12px 20px; margin-bottom: 25px; font-size: 0.9rem; font-weight: 500; }
         .category-header-title { font-size: 1.05rem; font-weight: bold; color: #2d3748; margin-top: 30px; margin-bottom: 10px; display: flex; flex-direction: column; }
         .category-allocation { font-size: 0.8rem; color: #718096; font-weight: normal; margin-top: 2px; }
-        .shopping-btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 180px; }
-        .shopping-btn { padding: 4px 6px; font-size: 0.75rem; border-radius: 4px; text-decoration: none; text-align: center; background-color: #f0f4f8; color: #2b6cb0; border: 1px solid #cbd5e0; font-weight: bold; display: inline-block; }
-        .shopping-btn:hover { background-color: #1a4f8a; color: white !important; }
+        .shopping-btn-grid { display: flex; gap: 8px; }
+        .shopping-btn { padding: 6px 14px; font-size: 0.8rem; border-radius: 4px; background-color: #1a4f8a; color: white; border: none; font-weight: bold; cursor: pointer; display: inline-block; text-decoration: none; }
+        .shopping-btn:hover { background-color: #2b6cb0; color: white !important; }
     </style>
 </head>
 <body>
@@ -41,106 +41,100 @@
 
 <div class="container" style="max-width: 800px;">
     <div class="main-card shadow-sm">
-        <!-- 💡 பார்ட்டி பக்கத்தைப் போலவே தற்போதைய பக்கத்திலேயே அப்மிட் ஆகும் தூய்மையான எச்.டி.எம்.எல் ஃபார்ம்! -->
-        <form action="/home" method="get">
-            <div class="box-section">
-                <div class="box-title">💾 Budget Details</div>
-                <label class="form-label text-muted small">Total Budget (\$)</label>
-                <input type="number" name="budget" id="budgetInput" class="form-control" value="5000">
+        <div class="box-section">
+            <div class="box-title">💾 Budget Details</div>
+            <label class="form-label text-muted small">Total Budget (\$)</label>
+            <input type="number" id="budgetInput" class="form-control" placeholder="Enter total budget e.g. 50000" value="">
+        </div>
+        
+        <div class="box-section">
+            <div class="box-title">🛋️ Fixtures & Furniture</div>
+            <div class="row">
+                <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Lights/Fixtures</label><input type="number" id="lightsInput" class="form-control" value="5"></div>
+                <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Ceiling Fans</label><input type="number" id="fansInput" class="form-control" value="4"></div>
+                <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Furniture Pieces</label><input type="number" id="furnitureInput" class="form-control" value="2"></div>
             </div>
+        </div>
+
+        <div class="box-section">
+            <div class="box-title">🏠 Rooms to Include</div>
+            <div class="d-flex gap-4" style="font-size:0.9rem;">
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="livingRoomCheck" checked><label class="form-check-label">Living Room</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="kitchenCheck" checked><label class="form-check-label">Kitchen</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="bedroomCheck" checked><label class="form-check-label">Bedroom</label></div>
+            </div>
+        </div>
+
+        <button onclick="generateDynamicBudgetLayout()" class="btn-generate shadow-sm">Generate Recommendations</button>
+        <div id="output" class="mt-4 d-none"></div>
+    </div>
+</div>
+
+<script>
+function generateDynamicBudgetLayout() {
+    const budget = parseFloat(document.getElementById('budgetInput').value);
+    localStorage.setItem("live_home_budget_value", document.getElementById('budgetInput').value);
+    
+    if (!budget || budget <= 0) {
+        alert("Please enter a valid budget amount!");
+        return;
+    }
+
+    const lights = parseInt(document.getElementById('lightsInput').value) || 5;
+    const fans = parseInt(document.getElementById('fansInput').value) || 4;
+    const furniture = parseInt(document.getElementById('furnitureInput').value) || 2;
+    const outputDiv = document.getElementById('output');
+    
+    outputDiv.classList.remove('d-none');
+    outputDiv.innerHTML = "<p class='text-center fw-bold text-primary py-3'><i class='fas fa-spinner fa-spin'></i> PocketSmart AI is analyzing your customized budget boundaries...</p>";
+    
+    setTimeout(function() {
+        let html = '';
+        html += '<hr style="border-top:2px dashed #cbd5e0;margin:40px 0;">';
+        html += '<h5 class="fw-bold text-center mb-3 text-dark">Your Personalized Budget Plan</h5>';
+        html += '<div class="card-summary d-flex justify-content-between align-items-center shadow-sm">';
+        html += '<div>Total Budget: $' + budget.toLocaleString('en-US', {minimumFractionDigits: 2}) + '</div>';
+        html += '<div>Remaining Budget: <span class="text-warning fw-bold">$' + (budget * 0.1).toLocaleString('en-US', {minimumFractionDigits: 2}) + '</span></div>';
+        html += '</div>';
+        
+        const categories = [
+            {name: "Lighting", alloc: budget * 0.3, item: "LED Bulb", price: 100.00, qty: lights, q: "led+bulb+warm+white"},
+            {name: "Ceiling Fans", alloc: budget * 0.4, item: "Havells Fan", price: 500.00, qty: fans, q: "havells+ceiling+fan"},
+            {name: "Furniture", alloc: budget * 0.2, item: "Plastic Chair", price: 250.00, qty: furniture, q: "plastic+chair"}
+        ];
+        
+        categories.forEach(cat => {
+            html += '<div class="category-header-title"><span>📍 ' + cat.name + '</span><span class="category-allocation">Allocation: $' + cat.alloc.toLocaleString('en-US', {minimumFractionDigits: 2}) + '</span></div>';
+            html += '<div class="table-responsive">';
+            html += '<table class="table table-bordered bg-white align-middle shadow-sm table-sm" style="font-size:0.82rem;">';
+            html += '<thead class="table-light text-secondary"><tr><th>Item</th><th>Price (Per Unit)</th><th>Quantity</th><th>Total Cost</th><th>Shopping Links</th></tr></thead>';
+            html += '<tbody>';
+            html += '<tr>';
+            html += '<td><strong>' + cat.item + '</strong></td>';
+            html += '<td>$' + cat.price.toFixed(2) + '</td>';
+            html += '<td>' + cat.qty + '</td>';
+            html += '<td>$' + (cat.price * cat.qty).toLocaleString('en-US', {minimumFractionDigits: 2}) + '</td>';
+            html += '<td>';
             
-            <div class="box-section">
-                <div class="box-title">🛋️ Fixtures & Furniture</div>
-                <div class="row">
-                    <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Lights/Fixtures</label><input type="number" name="lights" id="lightsInput" class="form-control" value="5"></div>
-                    <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Ceiling Fans</label><input type="number" name="fans" id="fansInput" class="form-control" value="4"></div>
-                    <div class="col-md-6 mb-3"><label class="form-label small text-muted">Number of Furniture Pieces</label><input type="number" name="furniture" id="furnitureInput" class="form-control" value="2"></div>
-                </div>
-            </div>
+            // 🎯 உங்க ஸ்கிரீன்ஷாட்டில் உள்ள அதே அசல் நேரடி எச்.டி.எம்.எல் லிங்க் கட்டமைப்பு (<a href="..." target="_blank">...)!
+            const amzLink = "https://amazon.in" + cat.query;
+            const flipLink = "https://flipkart.com" + cat.query;
+            const ikeaLink = "https://ikea.com" + cat.query;
 
-            <div class="box-section">
-                <div class="box-title">🏠 Rooms to Include</div>
-                <div class="d-flex gap-4" style="font-size:0.9rem;">
-                    <div class="form-check"><input class="form-check-input" type="checkbox" checked><label class="form-check-label">Living Room</label></div>
-                    <div class="form-check"><input class="form-check-input" type="checkbox" checked><label class="form-check-label">Kitchen</label></div>
-                    <div class="form-check"><input class="form-check-input" type="checkbox"><label class="form-check-label">Bedroom</label></div>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-generate shadow-sm">Generate Recommendations</button>
-        </form>
-
-        <!-- 🎯 100% தூய எச்.டி.எம்.எல் மற்றும் ஜின்ஜா2 லேயர் மூலமாக நேரடியாக வரும் அவுட்புட் அட்டவணை! -->
-        <div id="output" class="mt-4">
-            <hr style="border-top:2px dashed #cbd5e0;margin:40px 0;">
-            <h5 class="fw-bold text-center mb-3 text-dark">Your Personalized Budget Plan</h5>
-            <div class="card-summary d-flex justify-content-between align-items-center shadow-sm">
-                <div>Total Budget: $5,000.00</div>
-                <div>Remaining Budget: <span class="text-warning fw-bold">$500.00</span></div>
-            </div>
-
-            <!-- Lighting Section -->
-            <div class="category-header-title"><span>📍 Lighting</span><span class="category-allocation">Allocation: $1,500.00</span></div>
-            <div class="table-responsive">
-                <table class="table table-bordered bg-white align-middle shadow-sm table-sm" style="font-size:0.82rem;">
-                    <thead class="table-light text-secondary"><tr><th>Item</th><th>Price (Per Unit)</th><th>Quantity</th><th>Shopping Links</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>LED Bulb</strong></td>
-                            <td>$100.00</td>
-                            <td>5</td>
-                            <td>
-                                <div class="shopping-btn-grid">
-                                    <a href="https://amazon.in" target="_blank" class="shopping-btn">Amazon</a>
-                                    <a href="https://flipkart.com" target="_blank" class="shopping-btn">Flipkart</a>
-                                    <a href="https://ikea.com" target="_blank" class="shopping-btn">Ikea</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Ceiling Fans Section -->
-            <div class="category-header-title"><span>📍 Ceiling Fans</span><span class="category-allocation">Allocation: $2,000.00</span></div>
-            <div class="table-responsive">
-                <table class="table table-bordered bg-white align-middle shadow-sm table-sm" style="font-size:0.82rem;">
-                    <thead class="table-light text-secondary"><tr><th>Item</th><th>Price (Per Unit)</th><th>Quantity</th><th>Shopping Links</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Havells Fan</strong></td>
-                            <td>$500.00</td>
-                            <td>4</td>
-                            <td>
-                                <div class="shopping-btn-grid">
-                                    <a href="https://amazon.in" target="_blank" class="shopping-btn">Amazon</a>
-                                    <a href="https://flipkart.com" target="_blank" class="shopping-btn">Flipkart</a>
-                                    <a href="https://ikea.com" target="_blank" class="shopping-btn">Ikea</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Furniture Section -->
-            <div class="category-header-title"><span>📍 Furniture</span><span class="category-allocation">Allocation: $1,000.00</span></div>
-            <div class="table-responsive">
-                <table class="table table-bordered bg-white align-middle shadow-sm table-sm" style="font-size:0.82rem;">
-                    <thead class="table-light text-secondary"><tr><th>Item</th><th>Price (Per Unit)</th><th>Quantity</th><th>Shopping Links</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Plastic Chair</strong></td>
-                            <td>$250.00</td>
-                            <td>2</td>
-                            <td>
-                                <div class="shopping-btn-grid">
-                                    <a href="https://amazon.in" target="_blank" class="shopping-btn">Amazon</a>
-                                    <a href="https://flipkart.com" target="_blank" class="shopping-btn">Flipkart</a>
-                                    <a href="https://ikea.com" target="_blank" class="shopping-btn">Ikea</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            html += '<div class="shopping-btn-grid">';
+            html += '  <a href="https://amazon.in" target="_blank" class="shop-link-btn" styel="background-color: #2874f0">Amazon</a>';
+            html += '  <a href="https://flipkart.com" target="_blank" class="shop_link-btn" style="background-color: #2874f0;">Flipkart</a>';
+            html += '  <a href="https://www.ikea.com/in/en/" target="_blank" class="shop-link-btn" style="background-color: #ffdb00; color: #0058a3;">IKEA</a>';
+            html += '</div>';
+            
+            html += '</td>';
+            html += '</tr>';
+            html += '</tbody></table></div>';
+        });
+        
+        outputDiv.innerHTML = html;
+    }, 1200);
+}
+</script>
+</body>
+</html>
