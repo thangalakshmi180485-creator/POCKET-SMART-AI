@@ -17,10 +17,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 👥 பதிவு செய்யப்பட்ட அசல் பயனர்களின் பட்டியல்
-registered_users = ["sai", "admin", "user123", "aswathi", "sumathi", "sankari"]
+# 💾 பயனர்களின் விபரங்களை நிரந்தரமாகச் சேமிக்கும் JSON ஃபைல் செட்டப்
+DB_FILE = "users_db.json"
 
-# 🏠 ஹோம் பிளானர் பிரண்ட்எண்ட் ஜாவாஸ்கிரிப்ட் அனுப்பும் மாறிகள் கட்டமைப்பு
+def load_users():
+    default_list = ["sai", "admin", "user123", "aswathi", "sumathi", "sankari"]
+    if not os.path.exists(DB_FILE):
+        with open(DB_FILE, "w", encoding="utf-8") as f:
+            json.dump(default_list, f)
+        return default_list
+    try:
+        with open(DB_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return default_list
+
+def save_user(username: str):
+    users = load_users()
+    if username not in users:
+        users.append(username)
+        with open(DB_FILE, "w", encoding="utf-8") as f:
+            json.dump(users, f)
+
 class HomeBudgetInput(BaseModel):
     total_budget: float
     num_lights: int = 5
@@ -32,129 +50,87 @@ class HomeBudgetInput(BaseModel):
 async def plan_home_budget(data: HomeBudgetInput):
     try:
         total = data.total_budget
-        
-        # 💡 அதிகாரப்பூர்வ அமேசான் (/s?k=) மற்றும் ஃப்ளிப்கார்ட் (/search?q=) தேடல் லேயர் குறியீடுகள்!
         def make_links(item_query):
             q = urllib.parse.quote_plus(item_query)
             return {
                 "amazon": f"https://amazon.in{q}",
                 "flipkart": f"https://flipkart.com{q}",
-                "ikea": f"https://ikea.com{q}",
-                "myntra": f"https://myntra.com{q}",
-                "ajio": f"https://ajio.com{q}"
+                "ikea": f"https://ikea.com{q}"
             }
-
         return {
             "status": "success",
-            "budget_summary": {
-                "total_budget": total,
-                "remaining_budget": total * 0.1
-            },
+            "budget_summary": {"total_budget": total, "remaining_budget": total * 0.1},
             "categories": [
-                {
-                    "name": "Lighting",
-                    "allocation": total * 0.3,
-                    "items": [{
-                        "name": "LED Bulb (Warm White)",
-                        "description": "Energy-efficient LED bulbs for general interior lighting.",
-                        "price": 100.00,
-                        "quantity": data.num_lights,
-                        "links": make_links("led bulb warm white")
-                    }]
-                },
-                {
-                    "name": "Ceiling_fans",
-                    "allocation": total * 0.4,
-                    "items": [{
-                        "name": "Havells Ceiling Fan",
-                        "description": "Premium functional high-speed cooling fan.",
-                        "price": 500.00,
-                        "quantity": data.num_fans,
-                        "links": make_links("havells ceiling fan")
-                    }]
-                },
-                {
-                    "name": "Furniture",
-                    "allocation": total * 0.2,
-                    "items": [
-                        {
-                            "name": "Plastic Chair",
-                            "description": "Stackable plastic chairs for kitchen or living room space.",
-                            "price": 250.00,
-                            "quantity": data.num_furniture,
-                            "links": make_links("plastic chair")
-                        },
-                        {
-                            "name": "Small Wooden Table",
-                            "description": "Simple elegant wooden table for dining layouts.",
-                            "price": 500.00,
-                            "quantity": 1,
-                            "links": make_links("small wooden table")
-                        }
-                    ]
-                }
+                {"name": "Lighting", "allocation": total * 0.3, "items": [{"name": "LED Bulb", "price": 100.0, "quantity": data.num_lights, "links": make_links("led bulb")}]},
+                {"name": "Ceiling_fans", "allocation": total * 0.4, "items": [{"name": "Havells Fan", "price": 500.0, "quantity": data.num_fans, "links": make_links("havells fan")}]},
+                {"name": "Furniture", "allocation": total * 0.2, "items": [{"name": "Plastic Chair", "price": 250.0, "quantity": data.num_furniture, "links": make_links("plastic chair")}]}
             ]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# 📜 உங்க லேப்டாப்பில் இருக்கும் எச்.டி.எம்.எல் பக்கங்களை எர்ரர் இல்லாமல் நேரடியாக வாசிக்கும் பக்கா முறை!
 def load_html_page(page_name: str) -> str:
     file_path = os.path.join("templates", page_name)
     if os.path.exists(file_path):
         with open(file_path, "r", encoding="utf-8") as f:
             return f.read()
-    return f"<h1>Error: templates/{page_name} file is missing inside workspace.</h1>"
+    return f"<h1>Error: templates/{page_name} file is missing.</h1>"
 
-# --- 🔐 லாகின் பாதுகாப்பு சரிபார்ப்பு எண்ட்பாயிண்ட் ---
-@app.post("/login-check")
-async def login_check(username: str = Form(...), password: str = Form(...)):
-    if username not in registered_users:
+# --- 🔐 லாகின் சரிபார்ப்பு எண்ட்பாயிண்ட் (GET & POST இரண்டையும் ஏற்கும் வண்ணம் மாஸ்டர் செட்டப்) ---
+@app.api_route("/login-check", methods=["GET", "POST"])
+async def login_check(username: str = Form(None), password: str = Form(None)):
+    if not username:
+        return RedirectResponse(url="/login", status_code=303)
+    
+    current_users = load_users()
+    if username not in current_users:
         error_html = load_html_page("login.html").replace(
             'Sign In</h3>',
             'Sign In</h3><div class="alert alert-danger text-center" style="font-size:0.85rem; padding:10px; margin-bottom:15px; border-radius:6px;">Access Denied! Account not found. Please click Create Account first.</div>'
         )
         return HTMLResponse(content=error_html)
-    return RedirectResponse(url=f"/dashboard?user={username}", status_code=302)
+    return RedirectResponse(url=f"/dashboard?user={username}", status_code=303)
+
+# --- 🎯 புதிய கணக்கு பதிவு செய்யும் எண்ட்பாயிண்ட் (GET & POST இரண்டையும் ஏற்கும் வண்ணம் மாஸ்டர் செட்டப்) ---
+@app.api_route("/register-save", methods=["GET", "POST"])
+async def register_save(username: str = Form(None), password: str = Form(None), email: str = Form(None)):
+    if not username:
+        return RedirectResponse(url="/register", status_code=303)
+        
+    save_user(username)
+    
+    success_html = load_html_page("login.html").replace(
+        'Sign In</h3>',
+        'Sign In</h3><div class="alert alert-success text-center" style="font-size:0.85rem; padding:10px; margin-bottom:15px; border-radius:6px;">Registration Successful! Please Sign In with your new account.</div>'
+    )
+    return HTMLResponse(content=success_html)
 
 # --- 🔗 வெப் முகவரிகள் அலைன்மென்ட் மேப்பிங் ---
-
 @app.get("/", response_class=HTMLResponse)
-async def serve_landing_page():
-    # 🎯 பயனர் முதன்முதலில் உள்ளே வரும்போது அச்சு அசலான மெயின் முகப்புப் பக்கம் (index.html) லோடு ஆகும்!
-    return load_html_page("index.html")
+async def serve_landing_page(): return load_html_page("index.html")
 
 @app.get("/login", response_class=HTMLResponse)
-async def serve_login_page():
-    # 🎯 முகப்புப் பக்கத்தில் இருக்கும் 'Get Started' பட்டனை அமுக்கும்போது மட்டும் லாகின் பக்கம் லோடு ஆகும்!
-    return load_html_page("login.html")
+async def serve_login_page(): return load_html_page("login.html")
 
 @app.get("/register", response_class=HTMLResponse)
-async def serve_register_page():
-    return load_html_page("register.html")
+async def serve_register_page(): return load_html_page("register.html")
 
 @app.get("/dashboard", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
-async def serve_dashboard_page():
-    return load_html_page("dashboard.html")
+async def serve_dashboard_page(): return load_html_page("dashboard.html")
 
 @app.get("/home", response_class=HTMLResponse)
-async def serve_home_planner():
-    return load_html_page("home_planner.html")
+async def serve_home_planner(): return load_html_page("home_planner.html")
 
 @app.get("/party", response_class=HTMLResponse)
-async def serve_party_planner():
-    return load_html_page("party_planner.html")
+async def serve_party_planner(): return load_html_page("party_planner.html")
 
 @app.get("/jewelry", response_class=HTMLResponse)
-async def serve_jewelry_planner():
-    return load_html_page("jewelry_planner.html")
+async def serve_jewelry_planner(): return load_html_page("jewelry_planner.html")
 
 @app.get("/history", response_class=HTMLResponse)
-async def serve_history_page():
-    return load_html_page("history.html")
+async def serve_history_page(): return load_html_page("history.html")
 
 if __name__ == "__main__":
     import uvicorn
-    print("Starting PocketSmart Master Backend Server...")
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
